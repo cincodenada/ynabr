@@ -1,3 +1,5 @@
+source('util.R')
+
 #' Set your YNAB API options
 #'
 #' This function sets a global option ynab_token for use in
@@ -135,62 +137,16 @@ ynab_get_budget <- function(budget,
 
   # Deal with deleted data ----------------------
   if (remove_deleted == TRUE) {
-    # Remove deleted accounts
-    bd[["data"]][["budget"]][["accounts"]] <-
-      purrr::discard(bd[["data"]][["budget"]][["accounts"]], ~ {
-        .x[["deleted"]]
-      })
-    # Remove deleted payees
-    bd[["data"]][["budget"]][["payees"]] <-
-      purrr::discard(bd[["data"]][["budget"]][["payees"]], ~ {
-        .x[["deleted"]]
-      })
-    # Remove deleted payee_locations
-    bd[["data"]][["budget"]][["payee_locations"]] <-
-      purrr::discard(bd[["data"]][["budget"]][["payee_locations"]], ~ {
-        .x[["deleted"]]
-      })
-    # Remove deleted category_groups
-    bd[["data"]][["budget"]][["category_groups"]] <-
-      purrr::discard(bd[["data"]][["budget"]][["category_groups"]], ~ {
-        .x[["deleted"]]
-      })
-    # Remove deleted categories
-    bd[["data"]][["budget"]][["categories"]] <-
-      purrr::discard(bd[["data"]][["budget"]][["categories"]], ~ {
-        .x[["deleted"]]
-      })
-    # Remove deleted months
-    bd[["data"]][["budget"]][["months"]] <-
-      purrr::discard(bd[["data"]][["budget"]][["months"]], ~ {
-        .x[["deleted"]]
-      })
-    # Remove deleted transactions
-    bd[["data"]][["budget"]][["transactions"]] <-
-      purrr::discard(bd[["data"]][["budget"]][["transactions"]], ~ {
-        .x[["deleted"]]
-      })
-    # Remove deleted subtransactions
-    bd[["data"]][["budget"]][["subtransactions"]] <-
-      purrr::discard(bd[["data"]][["budget"]][["subtransactions"]], ~ {
-        .x[["deleted"]]
-      })
-    # Remove deleted scheduled_transactions
-    bd[["data"]][["budget"]][["scheduled_transactions"]] <-
-      purrr::discard(
-        bd[["data"]][["budget"]][["scheduled_transactions"]],
-        ~ {
-          .x[["deleted"]]
-        }
-      )
-    # Remove deleted scheduled_subtransactions
-    bd[["data"]][["budget"]][["scheduled_subtransactions"]] <-
-      purrr::discard(
-        bd[["data"]][["budget"]][["scheduled_subtransactions"]],
-        ~ {
-          .x[["deleted"]]
-        }
-      )
+    prune_deleted(bd[["data"]][["budget"]], "accounts")
+    prune_deleted(bd[["data"]][["budget"]], "payees")
+    prune_deleted(bd[["data"]][["budget"]], "payee_locations")
+    prune_deleted(bd[["data"]][["budget"]], "category_groups")
+    prune_deleted(bd[["data"]][["budget"]], "categories")
+    prune_deleted(bd[["data"]][["budget"]], "months")
+    prune_deleted(bd[["data"]][["budget"]], "transactions")
+    prune_deleted(bd[["data"]][["budget"]], "subtransactions")
+    prune_deleted(bd[["data"]][["budget"]], "scheduled_transactions")
+    prune_deleted(bd[["data"]][["budget"]], "scheduled_subtransactions")
   }
 
   # Deal with closed data -------------------
