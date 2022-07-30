@@ -476,24 +476,18 @@ ynab_get_account_data <- function(bd, exclude_subtransactions = TRUE) {
         transaction_id = .x[["id"]],
         date = .x[["date"]],
         amount = .x[["amount"]],
-        memo = ifelse(is.null(.x[["memo"]]), NA, .x[["memo"]]),
+        memo = null_to_na(.x[["memo"]]),
         cleared = .x[["cleared"]],
         approved = .x[["approved"]],
-        flag_color = ifelse(is.null(.x[["flag_color"]]), NA, .x[["flag_color"]]),
+        flag_color = null_to_na(.x[["flag_color"]]),
         account_id = .x[["account_id"]],
         payee_id = .x[["payee_id"]],
-        category_id = ifelse(is.null(.x[["category_id"]]), NA, .x[["category_id"]]),
-        transfer_account_id = ifelse(is.null(.x[["transfer_account_id"]]), NA,
-          .x[["transfer_account_id"]]
-        ),
-        transfer_transaction_id = ifelse(is.null(.x[["transfer_transaction_id"]]),
-          NA, .x[["transfer_transaction_id"]]
-        ),
-        matched_transaction_id = ifelse(is.null(.x[["matched_transaction_id"]]),
-          NA, .x[["matched_transaction_id"]]
-        ),
-        import_id = ifelse(is.null(.x[["import_id"]]), NA, .x[["import_id"]]),
-        deleted = ifelse(is.null(.x[["deleted"]]), NA, .x[["deleted"]]),
+        category_id = null_to_na(.x[["category_id"]]),
+        transfer_account_id = null_to_na(.x[["transfer_account_id"]]),
+        transfer_transaction_id = null_to_na(.x[["transfer_transaction_id"]]),
+        matched_transaction_id = null_to_na(.x[["matched_transaction_id"]]),
+        import_id = null_to_na(.x[["import_id"]]),
+        deleted = null_to_na(.x[["deleted"]]),
         stringsAsFactors = FALSE
       )
     })
@@ -522,10 +516,7 @@ ynab_get_account_data <- function(bd, exclude_subtransactions = TRUE) {
     df <- data.frame(
       payee_id = .x[["id"]],
       payee_name = .x[["name"]],
-      payee_transfer_account_id = ifelse(is.null(.x[["transfer_account_id"]]),
-        NA,
-        .x[["transfer_account_id"]]
-      ),
+      payee_transfer_account_id = null_to_na(.x[["transfer_account_id"]]),
       stringsAsFactors = FALSE
     )
   })
@@ -536,28 +527,16 @@ ynab_get_account_data <- function(bd, exclude_subtransactions = TRUE) {
       category_id = .x[["id"]],
       category_name = .x[["name"]],
       category_hidden = .x[["hidden"]],
-      original_category_group_id = ifelse(is.null(.x[["original_category_group_id"]]),
-        NA,
-        .x[["original_category_group_id"]]
-      ),
-      category_note = ifelse(is.null(.x[["note"]]), NA, .x[["note"]]),
+      original_category_group_id = null_to_na(.x[["original_category_group_id"]]),
+      category_note = null_to_na(.x[["note"]]),
       budgeted = .x[["budgeted"]],
       activity = .x[["activity"]],
       balance = .x[["balance"]],
-      goal_type = ifelse(is.null(.x[["goal_type"]]), NA, .x[["goal_type"]]),
-      goal_creation_month = ifelse(is.null(.x[["goal_creation_month"]]),
-        NA,
-        .x[["goal_creation_month"]]
-      ),
+      goal_type = null_to_na(.x[["goal_type"]]),
+      goal_creation_month = null_to_na(.x[["goal_creation_month"]]),
       goal_target = .x[["goal_target"]],
-      goal_target_month = ifelse(is.null(.x[["goal_target_month"]]),
-        NA,
-        .x[["goal_target_month"]]
-      ),
-      goal_percentage_complete = ifelse(is.null(.x[["goal_percentage_complete"]]),
-        NA,
-        .x[["goal_percentage_complete"]]
-      ),
+      goal_target_month = null_to_na(.x[["goal_target_month"]]),
+      goal_percentage_complete = null_to_na(.x[["goal_percentage_complete"]]),
       category_deleted = .x[["deleted"]],
       stringsAsFactors = FALSE
     )
@@ -575,22 +554,10 @@ ynab_get_account_data <- function(bd, exclude_subtransactions = TRUE) {
         id = .x[["id"]],
         transaction_id = .x[["transaction_id"]],
         amount = .x[["amount"]],
-        memo = ifelse(is.null(.x[["memo"]]),
-          NA,
-          .x[["memo"]]
-        ),
-        payee_id = ifelse(is.null(.x[["payee_id"]]),
-          NA,
-          .x[["payee_id"]]
-        ),
-        category_id = ifelse(is.null(.x[["category_id"]]),
-          NA,
-          .x[["category_id"]]
-        ),
-        transfer_account_id = ifelse(is.null(.x[["transfer_account_id"]]),
-          NA,
-          .x[["transfer_account_id"]]
-        ),
+        memo = null_to_na(.x[["memo"]]),
+        payee_id = null_to_na(.x[["payee_id"]]),
+        category_id = null_to_na(.x[["category_id"]]),
+        transfer_account_id = null_to_na(.x[["transfer_account_id"]]),
         deleted = .x[["deleted"]]
       )
     })
