@@ -570,14 +570,8 @@ ynab_get_account_data <- function(bd, exclude_subtransactions = TRUE) {
     )
 
     # Create category and payee id for merge
-    ad$category_id <- ifelse(is.na(ad$category_id.y),
-      ad$category_id.x,
-      ad$category_id.y
-    )
-    ad$payee_id <- ifelse(is.na(ad$payee_id.y),
-      ad$payee_id.x,
-      ad$payee_id.y
-    )
+    combine_cols(ad, 'category_id')
+    combine_cols(ad, 'payee_id')
 
     # Merge in Payee and Category Details
     ad <- merge(ad, pmd, by.x = "payee_id", by.y = "payee_id", all.x = TRUE)
@@ -585,25 +579,15 @@ ynab_get_account_data <- function(bd, exclude_subtransactions = TRUE) {
 
     # TODO: Final cleanup of subtransaction dataset
     # Clean up amount
-    ad$amount <- ifelse(is.na(ad$amount.y),
-      ad$amount.x,
-      ad$amount.y
-    )
+    combine_cols(ad, 'amount')
+
     # Clean up memo fields
     names(ad)[names(ad) == "memo.x"] <- "transaction_memo"
     names(ad)[names(ad) == "memo.y"] <- "subtransaction_memo"
 
-    # Clean up payee_name
-    ad$payee_name <- ifelse(is.na(ad$payee_name.y),
-      ad$payee_name.x,
-      ad$payee_name.y
-    )
+    combine_cols(ad, 'category_name')
 
-    # Clean up category_name
-    ad$category_name <- ifelse(is.na(ad$category_name.y),
-      ad$category_name.x,
-      ad$category_name.y
-    )
+    combine_cols(ad, 'category_name')
 
   } else {
     # Merge in Payee and Category Details
